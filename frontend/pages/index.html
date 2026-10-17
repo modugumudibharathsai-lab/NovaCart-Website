@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="NovaCart — Smart everyday essentials delivered to your door." />
+  <title>NovaCart — Smart Everyday Store</title>
+
+  <!-- Display serif and humanist sans-serif give the storefront a distinct editorial voice. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/navbar.css" />
+  <link rel="stylesheet" href="../css/home.css" />
+</head>
+<body>
+
+  <!-- ════════════════════════════════════════════════════════
+       NAVIGATION BAR
+       ════════════════════════════════════════════════════════ -->
+  <header class="navbar" id="navbar">
+    <div class="navbar__inner">
+
+      <!-- Logo -->
+      <a href="index.html" class="navbar__logo" aria-label="NovaCart Home">
+        <span class="navbar__logo-icon">⬡</span>
+        <span class="navbar__logo-text">Nova<span>Cart</span></span>
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="navbar__links" aria-label="Main navigation">
+        <a href="index.html"    class="navbar__link active">Home</a>
+        <a href="products.html" class="navbar__link">Products</a>
+        <a href="#categories"   class="navbar__link">Categories</a>
+      </nav>
+
+      <!-- Right-side actions -->
+      <div class="navbar__actions">
+        <!-- Cart -->
+        <a href="cart.html" class="navbar__cart" aria-label="Shopping cart">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+          </svg>
+          <span class="navbar__cart-badge" id="cart-count" aria-label="items in cart">0</span>
+        </a>
+
+        <!-- Auth links — swapped by navbar.js based on login state -->
+        <a href="login.html" class="navbar__btn navbar__btn--outline" id="nav-login">Log In</a>
+        <a href="register.html" class="navbar__btn navbar__btn--filled" id="nav-register">Sign Up</a>
+        <button class="navbar__btn navbar__btn--outline" id="nav-logout" style="display:none;">Log Out</button>
+      </div>
+
+      <!-- Mobile hamburger -->
+      <button class="navbar__hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar__drawer" id="nav-drawer" aria-hidden="true">
+      <a href="index.html"    class="navbar__drawer-link active">Home</a>
+      <a href="products.html" class="navbar__drawer-link" id="drawer-products">Products</a>
+      <a href="#categories"   class="navbar__drawer-link" id="drawer-categories">Categories</a>
+      <hr class="navbar__drawer-divider" />
+      <a href="login.html" class="navbar__drawer-link" id="drawer-login">Log In</a>
+      <a href="register.html" class="navbar__drawer-link" id="drawer-register">Sign Up</a>
+      <button class="navbar__drawer-link" id="drawer-logout" style="display:none;">Log Out</button>
+    </div>
+  </header>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       HERO SECTION
+       ════════════════════════════════════════════════════════ -->
+  <section class="hero" id="about">
+    <div class="container hero__inner">
+      <div class="hero__copy">
+        <p class="hero__eyebrow"><span class="hero__eyebrow-mark"></span> A little more considered</p>
+        <h1 class="hero__headline">
+          Good things<br />
+          <span>for every day.</span>
+        </h1>
+        <p class="hero__sub">
+          Useful finds for home, work and everywhere in between. Picked to make the everyday feel a little better.
+        </p>
+        <div class="hero__cta">
+          <a href="#products" class="btn btn--primary">Explore the edit <span aria-hidden="true">↗</span></a>
+          <a href="#categories" class="hero__text-link">Find your corner <span aria-hidden="true">↓</span></a>
+        </div>
+        <p class="hero__footnote"><span>18</span> thoughtful categories <i></i> <span>3,500</span> useful finds</p>
+      </div>
+      <div class="hero__visual" aria-label="A few everyday finds from NovaCart">
+        <figure class="hero__photo hero__photo--large">
+          <img src="../assets/products/variants/PRD00002.jpg" alt="Borosil water bottle from the home and kitchen collection" fetchpriority="high" />
+          <figcaption><span>01 / Home &amp; kitchen</span><strong>Made for the daily ritual.</strong></figcaption>
+        </figure>
+        <figure class="hero__photo hero__photo--small hero__photo--top">
+          <img src="../assets/products/variants/PRD00001.jpg" alt="Philips table fan from the electronics collection" />
+          <figcaption>Good design, useful things</figcaption>
+        </figure>
+        <figure class="hero__photo hero__photo--small hero__photo--bottom">
+          <img src="../assets/products/variants/PRD00003.jpg" alt="Hamleys puzzle set from the toys collection" />
+          <figcaption>A little play, every day</figcaption>
+        </figure>
+        <span class="hero__index" aria-hidden="true">NC / 01</span>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       TRUST BAR
+       ════════════════════════════════════════════════════════ -->
+  <div class="trust-bar">
+    <div class="container trust-bar__inner">
+      <div class="trust-item">
+        <span class="trust-item__index">01</span>
+        <span>18 ways to find your thing</span>
+      </div>
+      <div class="trust-item">
+        <span class="trust-item__index">02</span>
+        <span>Prices in Indian rupees</span>
+      </div>
+      <div class="trust-item">
+        <span class="trust-item__index">03</span>
+        <span>Save what catches your eye</span>
+      </div>
+      <div class="trust-item">
+        <span class="trust-item__index">04</span>
+        <span>Follow every order</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       CATEGORY CARDS
+       ════════════════════════════════════════════════════════ -->
+  <section class="categories-section" id="categories">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-kicker">THE COLLECTIONS</p>
+        <h2 class="section-title">Start with what you need.</h2>
+        <p class="section-sub">A good place to begin, wherever the day takes you.</p>
+      </div>
+      <div class="category-grid">
+        <button class="category-card" data-filter="Electronics">
+          <span class="category-card__icon">🎧</span>
+          <span class="category-card__name">Electronics</span>
+        </button>
+        <button class="category-card" data-filter="Accessories">
+          <span class="category-card__icon">👜</span>
+          <span class="category-card__name">Accessories</span>
+        </button>
+        <button class="category-card" data-filter="Home & Kitchen">
+          <span class="category-card__icon">🏠</span>
+          <span class="category-card__name">Home &amp; Kitchen</span>
+        </button>
+        <button class="category-card" data-filter="Fitness & Sports">
+          <span class="category-card__icon">🌿</span>
+          <span class="category-card__name">Fitness &amp; Sports</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       PRODUCTS SECTION
+       ════════════════════════════════════════════════════════ -->
+  <section class="products-section" id="products">
+    <div class="container">
+      <div class="section-header products-section__header">
+        <div>
+          <h2 class="section-title">Our Products</h2>
+          <p class="section-sub" id="product-count-label">Loading products…</p>
+        </div>
+        <!-- Filter pills (populated by JS) -->
+        <div class="filter-bar" id="filter-bar" role="group" aria-label="Filter by category">
+          <button class="filter-btn active" data-category="all">All Products</button>
+        </div>
+      </div>
+
+      <!-- Skeleton loader (shown while fetching) -->
+      <div class="product-grid skeleton-grid" id="skeleton-grid" aria-hidden="true">
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
+      </div>
+
+      <!-- Error state -->
+      <div class="state-box state-box--error" id="error-state" style="display:none;" role="alert">
+        <span class="state-box__icon">⚠️</span>
+        <p class="state-box__title">Couldn't load products</p>
+        <p class="state-box__desc" id="error-message">Please make sure the backend server is running.</p>
+        <button class="btn btn--outline" onclick="loadProducts()">Try Again</button>
+      </div>
+
+      <!-- Empty state -->
+      <div class="state-box" id="empty-state" style="display:none;">
+        <span class="state-box__icon">📭</span>
+        <p class="state-box__title">No products found</p>
+        <p class="state-box__desc">Try a different category filter.</p>
+        <button class="btn btn--outline filter-btn" data-category="all"
+                onclick="setActiveFilter('all')">Clear filter</button>
+      </div>
+
+      <!-- Product grid (populated by JS) -->
+      <div class="product-grid" id="product-grid" role="list"></div>
+      <button class="btn btn--outline product-load-more" id="load-more-products" type="button" aria-controls="product-grid" hidden>
+        Show more products
+      </button>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       CALL TO ACTION BANNER
+       ════════════════════════════════════════════════════════ -->
+  <section class="cta-section">
+    <div class="container cta-section__inner">
+      <div class="cta-section__copy">
+        <p class="cta-kicker">A GOOD THING, NOW AND THEN</p>
+        <h2>A considered little note for your inbox.</h2>
+        <p>Create an account to keep your saved finds and orders together.</p>
+      </div>
+      <div class="cta-section__actions">
+        <a href="register.html" class="btn btn--white">Create an Account</a>
+        <a href="#products" class="btn btn--ghost-white">Browse First</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       FOOTER
+       ════════════════════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <span class="footer__logo">⬡ NovaCart</span>
+        <p>Smart everyday essentials,<br/>curated with care.</p>
+      </div>
+      <div class="footer__links">
+        <div class="footer__col">
+          <p class="footer__col-title">Shop</p>
+          <a href="#products">All Products</a>
+          <a href="#categories">Electronics</a>
+          <a href="#categories">Accessories</a>
+          <a href="#categories">Home</a>
+        </div>
+        <div class="footer__col">
+          <p class="footer__col-title">Account</p>
+          <a href="login.html">Log In</a>
+          <a href="register.html">Register</a>
+          <a href="cart.html">Cart</a>
+        </div>
+        <div class="footer__col">
+          <p class="footer__col-title">Info</p>
+          <a href="#about">About Us</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>© 2024 NovaCart. Built for CodeAlpha Internship.</p>
+    </div>
+  </footer>
+
+
+  <!-- Scripts: api.js must load first (defines the `api` object used by products.js) -->
+  <script src="../js/api.js"></script>
+  <script src="../js/engagement.js"></script>
+  <script src="../js/navbar.js"></script>
+  <script src="../js/products.js"></script>
+
+</body>
+</html>

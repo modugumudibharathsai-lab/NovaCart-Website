@@ -1,0 +1,27 @@
+# ── Node.js ─────────────────────────────────────────
+node_modules/
+npm-debug.log*
+
+# ── Environment Variables (NEVER commit these) ───────
+.env
+.env.*
+!.env.example
+!**/.env.example
+
+# ── Local databases contain user and catalog data ────
+backend/*.db
+backend/*.db-*
+backend/*.sqlite
+backend/*.sqlite-*
+backend/*.sqlite3
+# The catalog copy is sanitized to exclude account data.
+!backend/novacart-catalog.db
+
+# ── OS Files ─────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ── Editor ───────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
