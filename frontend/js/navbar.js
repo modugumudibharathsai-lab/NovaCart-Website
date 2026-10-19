@@ -18,7 +18,7 @@
 
   // ── 1. Scroll shadow ──────────────────────────────────────────
   window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 10);
+    if (navbar) navbar.classList.toggle('scrolled', window.scrollY > 10);
   }, { passive: true });
 
   // ── 2. Hamburger toggle ───────────────────────────────────────

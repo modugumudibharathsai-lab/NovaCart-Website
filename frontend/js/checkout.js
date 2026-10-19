@@ -109,7 +109,7 @@ async function handlePlaceOrder(e) {
   if (!isLoggedIn()) {
     msgBox.textContent = 'Please log in to place an order.';
     msgBox.className   = 'auth-message error';
-    setTimeout(() => { window.location.href = 'login.html'; }, 1500);
+    setTimeout(() => { window.location.href = 'login.html?returnTo=checkout.html'; }, 1500);
     return;
   }
 

@@ -130,3 +130,8 @@ function deleteItem(productId) {
   removeFromCart(productId);
   renderCart();
 }
+
+window.changeQty = changeQty;
+window.deleteItem = deleteItem;
+window.renderCart = renderCart;
+

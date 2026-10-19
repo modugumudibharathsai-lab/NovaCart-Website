@@ -41,8 +41,24 @@ async function initialize() {
     return;
   }
 
-  const dbPath = path.resolve(__dirname, '..', process.env.DB_PATH || './novacart.db');
-  const db = new Database(dbPath);
+  const configuredPath = process.env.DB_PATH;
+  let dbPath;
+  if (configuredPath) {
+    dbPath = path.resolve(__dirname, '..', configuredPath);
+  } else {
+    const catalogPath = path.resolve(__dirname, '../novacart-catalog.db');
+    dbPath = fs.existsSync(catalogPath) ? catalogPath : path.resolve(__dirname, '../novacart.db');
+  }
+
+  let db;
+  try {
+    const { DatabaseSync } = require('node:sqlite');
+    db = new DatabaseSync(dbPath);
+  } catch {
+    const Database = require('better-sqlite3');
+    db = new Database(dbPath);
+  }
+
   try {
     db.exec(fs.readFileSync(path.join(__dirname, '../models/schema.sqlite.sql'), 'utf8'));
     const tables = db.prepare(
@@ -50,7 +66,7 @@ async function initialize() {
     ).all();
     console.log(`SQLite schema applied to ${dbPath}. Tables: ${tables.map(table => table.name).join(', ')}`);
   } finally {
-    db.close();
+    if (db && typeof db.close === 'function') db.close();
   }
 }
 

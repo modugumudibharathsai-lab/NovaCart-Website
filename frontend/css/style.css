@@ -36,6 +36,13 @@
   --clr-success:       #10b981;
   --clr-warning:       #f59e0b;
 
+  /* Aliases for cart & checkout components */
+  --color-primary:     var(--clr-primary);
+  --color-surface:     var(--clr-surface);
+  --color-border:      var(--clr-border);
+  --color-text:        var(--clr-text);
+  --border-radius:     var(--radius-md);
+
   /* Typography */
   --font-sans: 'DM Sans', 'Segoe UI', system-ui, sans-serif;
   --font-display: 'Fraunces', Georgia, serif;

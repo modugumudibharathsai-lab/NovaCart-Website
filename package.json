@@ -2,6 +2,7 @@
   "scripts": {
     "postinstall": "npm --prefix backend install",
     "start": "npm --prefix backend start",
+    "test": "npm --prefix backend test",
     "db:import": "node database/import-excel-to-postgres.js",
     "db:verify": "node database/verify-production-db.js"
   },

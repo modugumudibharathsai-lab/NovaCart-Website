@@ -103,16 +103,17 @@ function saveCart(cartArray) {
  * Returns the new total quantity for that product.
  */
 function addToCart(product) {
-  const cart     = getCart();
-  const existing = cart.find(item => item.id === product.id);
+  const cart      = getCart();
+  const productId = Number(product.id);
+  const existing  = cart.find(item => Number(item.id) === productId);
 
   if (existing) {
-    existing.quantity += 1;
+    existing.quantity = (existing.quantity || 1) + 1;
   } else {
     cart.push({
-      id:        product.id,
+      id:        productId,
       name:      product.name,
-      price:     product.price,
+      price:     Number(product.price) || 0,
       image_url: product.image_url || '',
       category:  product.category  || '',
       quantity:  1,

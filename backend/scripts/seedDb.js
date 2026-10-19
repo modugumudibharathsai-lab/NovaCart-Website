@@ -42,12 +42,27 @@ function seed() {
   console.log('  ║      NovaCart Database Seeder  🌱    ║');
   console.log('  ╚══════════════════════════════════════╝');
 
-  const dbPath = path.resolve(__dirname, '..', process.env.DB_PATH || './novacart.db');
+  const configuredPath = process.env.DB_PATH;
+  let dbPath;
+  if (configuredPath) {
+    dbPath = path.resolve(__dirname, '..', configuredPath);
+  } else {
+    const catalogPath = path.resolve(__dirname, '../novacart-catalog.db');
+    dbPath = fs.existsSync(catalogPath) ? catalogPath : path.resolve(__dirname, '../novacart.db');
+  }
+
   if (process.env.DATABASE_URL || process.env.NODE_ENV === 'production') {
     throw new Error('The sample seeder is SQLite-local and refuses to run when DATABASE_URL is configured.');
   }
 
-  const db = new Database(dbPath);
+  let db;
+  try {
+    const { DatabaseSync } = require('node:sqlite');
+    db = new DatabaseSync(dbPath);
+  } catch {
+    const Database = require('better-sqlite3');
+    db = new Database(dbPath);
+  }
 
   const checkStmt  = db.prepare('SELECT id FROM products WHERE name = ?');
   const insertStmt = db.prepare(

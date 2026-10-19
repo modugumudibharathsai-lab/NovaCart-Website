@@ -20,6 +20,7 @@
   let totalProducts = 0;
   let requestSequence = 0;
   const PAGE_SIZE = 24;
+  const loadedProductsMap = new Map();
 
   // ── DOM refs ──────────────────────────────────────────────────
   const grid          = document.getElementById('product-grid');
@@ -92,7 +93,11 @@
   // RENDER PRODUCTS
   // ════════════════════════════════════════════════════════════════
   function renderProducts(products, append = false) {
-    if (!append) hideAll();
+    if (!append) {
+      hideAll();
+      loadedProductsMap.clear();
+    }
+    products.forEach(p => loadedProductsMap.set(Number(p.id), p));
 
     if (!append && products.length === 0) {
       showEmpty();
@@ -164,10 +169,12 @@
 
           <div class="product-card__actions">
             <button class="btn btn--primary product-card__btn" onclick="event.stopPropagation(); window.location.href='product.html?id=${product.id}'" ${!inStock ? 'disabled' : ''}>
-              ${inStock ? 'View Product' : 'Out of Stock'}
+              ${inStock ? 'View Details' : 'Out of Stock'}
             </button>
-            <button class="btn btn--outline product-card__btn" onclick="event.stopPropagation(); toggleWishlist(${product.id}, this)">♡ Wishlist</button>
-            <button class="btn btn--outline product-card__btn" onclick="event.stopPropagation(); toggleCompare(${product.id}, this)">Compare</button>
+            <button class="btn btn--outline product-card__btn" onclick="event.stopPropagation(); quickAddToCart(${product.id}, this)" ${!inStock ? 'disabled' : ''}>
+              + Cart
+            </button>
+            <button class="btn btn--outline product-card__btn" onclick="event.stopPropagation(); toggleWishlist(${product.id}, this)">♡</button>
           </div>
         </div>
       </article>
@@ -295,5 +302,32 @@
       .replace(/"/g,  '&quot;')
       .replace(/'/g,  '&#039;');
   }
+
+  // ── Quick Add to Cart & Toast Feedback ────────────────────────
+  let toastTimer;
+  function showToast(message) {
+    const toastEl = document.getElementById('toast');
+    if (!toastEl) return;
+    toastEl.textContent = message;
+    toastEl.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2800);
+  }
+
+  function quickAddToCart(productId, button) {
+    const product = loadedProductsMap.get(Number(productId));
+    if (!product) return;
+    addToCart(product);
+    const originalText = button.textContent;
+    button.textContent = '✓ Added!';
+    button.disabled = true;
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.disabled = false;
+    }, 1500);
+    showToast(`"${product.name}" added to cart`);
+  }
+
+  window.quickAddToCart = quickAddToCart;
 
 })();

@@ -23,11 +23,31 @@ if (isPostgres) {
       : undefined,
   });
 } else {
-  const Database = require('better-sqlite3');
-  const dbPath = path.resolve(__dirname, '..', process.env.DB_PATH || './novacart.db');
-  sqlite = new Database(dbPath);
-  sqlite.pragma('foreign_keys = ON');
-  console.log('SQLite connected:', dbPath);
+  const configuredPath = process.env.DB_PATH;
+  let dbPath;
+  if (configuredPath) {
+    dbPath = path.resolve(__dirname, '..', configuredPath);
+  } else {
+    const catalogPath = path.resolve(__dirname, '../novacart-catalog.db');
+    dbPath = fs.existsSync(catalogPath) ? catalogPath : path.resolve(__dirname, '../novacart.db');
+  }
+
+  // Prefer Node.js native node:sqlite (Node 22+) with fallback to better-sqlite3
+  try {
+    const { DatabaseSync } = require('node:sqlite');
+    sqlite = new DatabaseSync(dbPath);
+    sqlite.exec('PRAGMA foreign_keys = ON;');
+    console.log('SQLite (node:sqlite) connected:', dbPath);
+  } catch (nativeErr) {
+    try {
+      const Database = require('better-sqlite3');
+      sqlite = new Database(dbPath);
+      sqlite.pragma('foreign_keys = ON');
+      console.log('SQLite (better-sqlite3) connected:', dbPath);
+    } catch (fallbackErr) {
+      throw new Error(`Failed to initialize SQLite driver: ${nativeErr.message}; ${fallbackErr.message}`);
+    }
+  }
 }
 
 function postgresSql(sql) {
@@ -36,14 +56,18 @@ function postgresSql(sql) {
 }
 
 function sqliteQuery(connection, sql, params) {
+  const sanitizedParams = params.map(val => (val === undefined ? null : val));
+  const isReturningOrSelect = /\b(select|pragma)\b/i.test(sql) || /\breturning\b/i.test(sql);
   const statement = connection.prepare(sql);
-  if (statement.reader) {
-    const rows = statement.all(...params);
+
+  if (isReturningOrSelect) {
+    const rows = statement.all(...sanitizedParams);
     return { rows, rowCount: rows.length };
   }
 
-  const result = statement.run(...params);
-  return { rows: [], rowCount: result.changes, changes: result.changes };
+  const result = statement.run(...sanitizedParams);
+  const count = result.changes !== undefined ? result.changes : 0;
+  return { rows: [], rowCount: count, changes: count, lastInsertRowid: result.lastInsertRowid };
 }
 
 async function query(sql, params = []) {
@@ -140,7 +164,8 @@ async function ensureSchema() {
 
 async function close() {
   if (pool) await pool.end();
-  if (sqlite) sqlite.close();
+  if (sqlite && typeof sqlite.close === 'function') sqlite.close();
 }
 
 module.exports = { isPostgres, query, withTransaction, testConnection, ensureSchema, close };
+

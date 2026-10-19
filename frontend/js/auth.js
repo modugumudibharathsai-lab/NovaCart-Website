@@ -92,11 +92,14 @@ async function handleLogin(e) {
   setButtonLoading('login-btn', true);
 
   try {
-    // Stage 2 will connect this to POST /api/auth/login
     const data = await api.post('/auth/login', { email, password });
     saveToken(data.token);
+    if (data.user) {
+      localStorage.setItem('novacart_user', JSON.stringify(data.user));
+    }
+    const returnTo = new URLSearchParams(window.location.search).get('returnTo') || 'index.html';
     setMessage('Login successful! Redirecting…', 'success');
-    setTimeout(() => { window.location.href = 'index.html'; }, 1000);
+    setTimeout(() => { window.location.href = returnTo; }, 1000);
   } catch (err) {
     setMessage(err.message, 'error');
   } finally {
@@ -120,11 +123,14 @@ async function handleRegister(e) {
   setButtonLoading('register-btn', true);
 
   try {
-    // Stage 2 will connect this to POST /api/auth/register
     const data = await api.post('/auth/register', { name, email, password });
     saveToken(data.token);
+    if (data.user) {
+      localStorage.setItem('novacart_user', JSON.stringify(data.user));
+    }
+    const returnTo = new URLSearchParams(window.location.search).get('returnTo') || 'index.html';
     setMessage('Account created! Redirecting…', 'success');
-    setTimeout(() => { window.location.href = 'index.html'; }, 1000);
+    setTimeout(() => { window.location.href = returnTo; }, 1000);
   } catch (err) {
     setMessage(err.message, 'error');
   } finally {
